@@ -1,0 +1,83 @@
+import React, { useEffect } from "react";
+import embed from 'vega-embed';
+
+const VegaLiteCharts: React.FC = () => {
+
+  useEffect(() => {
+    // spec options
+    const spec: any = {
+      description: 'Line with error band',
+      title: 'Line with error band',
+      width: 800,
+      height: 500,
+      data: {
+        values: [
+          {
+            ci1: 23.5007,
+            ci0: 19.6912,
+            center: 21.5735,
+            Year: 189302400000
+          },
+          {
+            ci1: 25.8214,
+            ci0: 20.8554,
+            center: 23.3750,
+            Year: 220924800000
+          },
+          {
+            ci1: 26.4472,
+            ci0: 21.9749,
+            center: 24.0611,
+            Year: 252460800000
+          },
+          {
+            ci1: 27.7074,
+            ci0: 22.6203,
+            center: 25.0931,
+            Year: 283996800000
+          }
+        ]
+      },
+      layer: [
+        {
+          mark: "errorband",
+          encoding: {
+            y: {
+              field: "ci1",
+              type: "quantitative",
+              scale: {"zero": false},
+              title: "Mean of Miles per Gallon (95% CIs)"
+            },
+            y2: {field: "ci0"},
+            x: {
+              field: "Year",
+              timeUnit: "year"
+            }
+          }
+        },
+        {
+          mark: "line",
+          encoding: {
+            y: {
+              "field": "center",
+              "type": "quantitative"
+            },
+            x: {
+              field: "Year",
+              timeUnit: "year"
+            }
+          }
+        }
+
+      ]
+    };
+  
+    embed('#vis', spec);
+  });
+
+  return (
+    <div id="vis"></div>
+  )
+}
+
+export default VegaLiteCharts;
